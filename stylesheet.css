@@ -8,7 +8,7 @@ img {
     max-width: 100%;
 }
 
-#ImgurAPI {
+button {
 /* Shamelessly stolen from http://www.usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
     padding: 10px 15px;
     background: #4479BA;
@@ -25,12 +25,14 @@ img {
     -ms-user-select:none;
     user-select:none;
 }
-#ImgurAPI:hover {
+
+button:hover {
     background: #356094;
     border: solid 1px #2A4E77;
     text-decoration: none;
 }
-#ImgurAPI:active {
+
+button:active {
     -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.6);
     background: #2E5481;
