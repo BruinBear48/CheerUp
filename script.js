@@ -2,43 +2,47 @@
 var xhr = new XMLHttpRequest();
 var imgSrc = 0;
 var lastImg = 0;
+var x;
+var list = [];
 
 function loadImgur() {
 // Got help from https://github.com/crsrusl/imgurGallery/blob/master/app.js
-    $.ajax({
-        dataType: "json",
-        mimeType: "textPlain", // Firefox 19 not working without this
-        type: "GET",
-        crossDomain:true,
-        url: "https://api.imgur.com/3/gallery/r/aww/top/0/all",
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader("Authorization", "Client-ID da42354d6ffb19a");
-        },
-        success: function(imgur) {
-            var limit = imgur.data.length;
-            var x = Math.floor(Math.random()*limit);    
+    for (i = 0; i < 10; i++) {
+        $.ajax({
+            dataType: "json",
+            mimeType: "textPlain", // Firefox 19 not working without this
+            type: "GET",
+            crossDomain:true,
+            url: "https://api.imgur.com/3/gallery/r/aww/top/all/" + i,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("Authorization", "Client-ID da42354d6ffb19a");
+            },
+            success: function(imgur) {
+                for (i = 0; i < imgur.data.length; i++) {
+                    list.push(imgur.data[i].link);
+                }
+            }
+        });
+    }
+}
 
-            if (imgSrc != 0) {lastImg = imgSrc;}
-
-            imgSrc = imgur.data[x].id;
-            imgSrc = "" + imgSrc;
-
-            $('#main').html('<img src="http://i.imgur.com/' + imgSrc + '.jpg"/>');
-        }
-    });
+function pickImage() {
+    x = Math.floor(Math.random()*list.length);
+    if (imgSrc != 0) {lastImg = imgSrc;}
+    imgSrc = list[x];
+    $('#main').html('<img src=' + imgSrc + '/>');
 }
 
 $(document).ready(function() {
     loadImgur();
     $('#ImgurAPI').click(function() {
-        loadImgur();
+        pickImage();
     });
     
     $('#LastImg').click(function() {
         if (lastImg != 0) {
-            $('#main').html('<img src="http://i.imgur.com/' + lastImg + '.jpg"/>');
+            $('#main').html('<img src=' + lastImg + '/>');
             imgSrc = 0;
         }
     });
-    
 });
