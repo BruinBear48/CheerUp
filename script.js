@@ -10,7 +10,7 @@ function loadImgur() {
     for (i = 0; i < 10; i++) {
         $.ajax({
             dataType: "json",
-            mimeType: "textPlain", // Firefox 19 not working without this
+            mimeType: "textPlain", // Firefox needs this?
             type: "GET",
             crossDomain:true,
             url: "https://api.imgur.com/3/gallery/r/aww/top/all/" + i,
@@ -35,6 +35,16 @@ function pickImage() {
 
 $(document).ready(function() {
     loadImgur();
+    navigator.mozApps.getSelf().onsuccess = function() {
+        if (navigator.mozApps.getSelf().result) {
+            // already installed as Firefox webapp
+        }
+        else {
+            // not installed so show install button
+            $('#B2G').css('visibility', 'visible');
+        }
+    }
+
     $('#ImgurAPI').click(function() {
         pickImage();
     });
@@ -44,5 +54,9 @@ $(document).ready(function() {
             $('#main').html('<img src=' + lastImg + '/>');
             imgSrc = 0;
         }
+    });
+    
+    $('#B2G').click(function() {
+        navigator.mozApps.install('http://mandeeps.github.com/CheerUp/manifest.webapp'); return false;
     });
 });
