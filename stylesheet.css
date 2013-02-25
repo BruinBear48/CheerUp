@@ -8,6 +8,10 @@ img {
     max-width: 100%;
 }
 
+#B2G {
+    visibility:hidden;
+}
+
 button {
 /* Shamelessly stolen from http://www.usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
     padding: 10px 15px;
