@@ -2,7 +2,7 @@
   "version": "0.1",
   "name": "Cheer Up!",
   "description": "View a random cute photo to cheer up",
-  "launch_path": "/index.html",
+  "launch_path": "/CheerUp/index.html",
   "developer": {
     "name": "Mandeep Shergill",
     "url": "http://www.shergillgames.com"
