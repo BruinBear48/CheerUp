@@ -61,8 +61,8 @@ $(document).ready(function() {
     
     $('#B2G').click(function() {
         // relative path bug workaround - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
-        navigator.mozApps.install(location.protocol + "//" + location.host + "/manifest.webapp").onsuccess = function() {
+        navigator.mozApps.install(location.protocol + "//" + location.host + "/manifest.webapp"); //.onsuccess = function() {
             $('#B2G').css('visibility', 'hidden');
-        };
+        //};
     });
 });
