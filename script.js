@@ -35,13 +35,16 @@ function pickImage() {
 
 $(document).ready(function() {
     loadImgur();
-    navigator.mozApps.getSelf().onsuccess = function() {
-        if (navigator.mozApps.getSelf().result) {
-            // already installed as Firefox webapp
-        }
-        else {
-            // not installed so show install button
-            $('#B2G').css('visibility', 'visible');
+
+    if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+        window.navigator.mozApps.getSelf().onsuccess = function() {
+            if (navigator.mozApps.getSelf().result) {
+                // already installed as Firefox webapp
+            }
+            else {
+                // not installed so show install button
+                $('#B2G').css('visibility', 'visible');
+            }
         }
     }
 
@@ -57,6 +60,6 @@ $(document).ready(function() {
     });
     
     $('#B2G').click(function() {
-        navigator.mozApps.install('http://mandeeps.github.com/CheerUp/manifest.webapp'); return false;
+        navigator.mozApps.install('/CheerUp/manifest.webapp'); return false;
     });
 });
