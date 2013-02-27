@@ -11,7 +11,6 @@
     "128": "/cheerUp128.png",
     "64": "/cheerUp64.png"
   },
-  //"orientation": "portrait-primary",
    "permissions": {
         "systemXHR": {
             "description": "Access Imgur"
