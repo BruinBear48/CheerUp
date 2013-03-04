@@ -35,8 +35,9 @@ function pickImage() {
 
 $(document).ready(function() {
     loadImgur();
- 
+
     if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+        // FIXTHIS - doesn't recognize when already installed
         window.navigator.mozApps.getSelf().onsuccess = function() {
             if (navigator.mozApps.getSelf().result) {
                 // already installed as Firefox webapp
@@ -45,20 +46,20 @@ $(document).ready(function() {
                 // not installed so show install button
                 $('#B2G').css('visibility', 'visible');
             }
-        }
+        };
     }
 
     $('#ImgurAPI').click(function() {
         pickImage();
     });
-    
+
     $('#LastImg').click(function() {
         if (lastImg != 0) {
             $('#main').html('<img src=' + lastImg + '/>');
             imgSrc = 0;
         }
     });
-    
+
     $('#B2G').click(function() {
         // relative path bug - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
         navigator.mozApps.install('http://mandeeps.github.com/CheerUp/manifest.webapp').onsuccess = function() {
