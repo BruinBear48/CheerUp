@@ -8,8 +8,8 @@
     "url": "http://www.shergillgames.com"
   },
   "icons": {
-    "128": "http://mandeeps.github.com/CheerUp/cheerUp128.png",
-    "64": "http://mandeeps.github.com/CheerUp/cheerUp64.png"
+    "128": "/CheerUp/cheerUp128.png",
+    "64": "/CheerUp/cheerUp64.png"
   },
    "permissions": {
         "systemXHR": {
