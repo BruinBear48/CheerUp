@@ -4,7 +4,7 @@ var imgSrc = 0;
 var lastImg = 0;
 var x;
 var list = [];
-var canInstall = !!(navigator.mozApps && navigator.mozApps.installPackage);
+var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
 
 function loadImgur() {
 // Got help from https://github.com/crsrusl/imgurGallery/blob/master/app.js
