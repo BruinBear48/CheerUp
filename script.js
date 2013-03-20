@@ -4,6 +4,7 @@ var imgSrc = 0;
 var lastImg = 0;
 var x;
 var list = [];
+var canInstall = !!(navigator.mozApps && navigator.mozApps.installPackage);
 
 function loadImgur() {
 // Got help from https://github.com/crsrusl/imgurGallery/blob/master/app.js
@@ -38,8 +39,9 @@ function pickImage() {
 $(document).ready(function() {
     loadImgur();
 
-    if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+//    if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
         // FIXTHIS - doesn't recognize when already installed
+    if (canInstall) {
         var request = window.navigator.mozApps.getSelf();
         request.onsuccess = function getSelfSuccess() {
             if (request.result) {
@@ -65,8 +67,9 @@ $(document).ready(function() {
 
     $('#B2G').click(function() {
         // relative path bug - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
-        navigator.mozApps.install('http://mandeeps.github.com/CheerUp/manifest.webapp').onsuccess = function() {
+        //navigator.mozApps.install('http://mandeeps.github.com/CheerUp/manifest.webapp').onsuccess = function() {
         //navigator.mozApps.install(window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/manifest.webapp").onsuccess = function() {
+        navigator.mozApps.install(location.protocol + "//" + location.host + "/manifest.webapp").onsuccess = function() {
             $('#B2G').css('visibility', 'hidden');
         };
     });
