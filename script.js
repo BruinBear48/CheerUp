@@ -1,17 +1,17 @@
-// I don't know what I'm doing!
 var xhr = new XMLHttpRequest();
-var imgSrc = 0;
+var curImg = 0;
 var lastImg = 0;
+var imgC = 0;
 var x;
 var list = [];
 var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
+var preImg = new Array();
 
 function loadImgur() {
-// Got help from https://github.com/crsrusl/imgurGallery/blob/master/app.js
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 7; i++) {
         $.ajax({
             dataType: "json",
-            mimeType: "textPlain", // Firefox needs this?
+            mimeType: "textPlain",
             type: "GET",
             crossDomain:true,
             url: "https://api.imgur.com/3/gallery/r/aww/top/all/" + i,
@@ -25,22 +25,24 @@ function loadImgur() {
             }
         });
     }
+    
+    for (i = 0; i < list.length; i++) {
+        preImg[i] = new Image();
+        preImg[i].src = list[i];
+    }
 }
 
 function pickImage() {
     x = Math.floor(Math.random()*list.length);
-    if (imgSrc != 0) {lastImg = imgSrc;}
-    imgSrc = list[x];
-    $('#main').hide();
-    $('#main').html('<img src=' + imgSrc + '/>');
-    $('#main').fadeIn(1000);
+    lastImg = curImg;
+    curImg = list[x];
+    $('#main').hide()
+    $('#main').html('<img src=' + curImg + '/>');
+    $('#main').fadeIn('slow');
 }
 
+loadImgur();
 $(document).ready(function() {
-    loadImgur();
-
-//    if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-        // FIXTHIS - doesn't recognize when already installed
     if (canInstall) {
         var request = window.navigator.mozApps.getSelf();
         request.onsuccess = function getSelfSuccess() {
@@ -50,9 +52,9 @@ $(document).ready(function() {
             else {
                 // not installed so show install button
                 $('#B2G').css('visibility', 'visible');
-            }
+            };
         };
-    }
+    };
 
     $('#ImgurAPI').click(function() {
         pickImage();
@@ -60,8 +62,10 @@ $(document).ready(function() {
 
     $('#LastImg').click(function() {
         if (lastImg != 0) {
-            $('#main').html('<img src=' + lastImg + '/>');
-            imgSrc = 0;
+            imgC = curImg;
+            curImg = lastImg;
+            lastImg = imgC;                
+            $('#main').html('<img src=' + curImg + '/>'); 
         }
     });
 
