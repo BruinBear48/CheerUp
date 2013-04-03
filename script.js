@@ -2,12 +2,15 @@ var xhr = new XMLHttpRequest();
 var curImg = 0;
 var lastImg = 0;
 var imgC = 0;
-var x;
 var list = [];
 var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
-var preImg = new Array();
+var lowRes = false;
 
 function loadImgur() {
+    if (window.innerWidth <= 640 && window.innerHeight <= 640) {
+        lowRes = true;
+    }
+
     for (i = 0; i < 7; i++) {
         $.ajax({
             dataType: "json",
@@ -20,12 +23,16 @@ function loadImgur() {
             },
             success: function(imgur) {
                 for (i = 0; i < imgur.data.length; i++) {
-                    list.push(imgur.data[i].link);
+                    if (lowRes) {
+                        list.push(imgur.data[i].link.replace(/.([^.]*)$/, 'l.$1'));
+                    }
+                    else {list.push(imgur.data[i].link);}
                 }
             }
         });
     }
-    
+
+    var preImg = new Array();
     for (i = 0; i < list.length; i++) {
         preImg[i] = new Image();
         preImg[i].src = list[i];
@@ -33,7 +40,7 @@ function loadImgur() {
 }
 
 function pickImage() {
-    x = Math.floor(Math.random()*list.length);
+    var x = Math.floor(Math.random()*list.length);
     lastImg = curImg;
     curImg = list[x];
     $('#main').hide()
@@ -43,11 +50,13 @@ function pickImage() {
 
 loadImgur();
 $(document).ready(function() {
+    $('#controls').css('visibility', 'visible');
     if (canInstall) {
         var request = window.navigator.mozApps.getSelf();
         request.onsuccess = function getSelfSuccess() {
             if (request.result) {
-                // already installed as Firefox webapp
+                // already installed as Firefox webapp, hide github
+                $('.github-ribbon').css('visibility', 'hidden');
             }
             else {
                 // not installed so show install button
