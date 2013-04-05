@@ -1,5 +1,6 @@
 body {
     overflow: hidden;
+    background: linear-gradient(to bottom, orange, darkorange);
 }
 
 #main {
@@ -17,8 +18,10 @@ img {
 
 #controls {
     visibility: hidden;
-    display: block;
+    height: 10%;
     width: 14em;
+    position: relative;
+    top: 4px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -89,4 +92,10 @@ button:active {
   box-shadow: 0px 0px 0px 4px rgba(55,55,55,1),
     0px 0px 10px 8px rgba(0,0,0,0.2);
   top: -31px;
+}
+
+@media screen and (max-width: 640px) {
+    .github-ribbon {
+        padding: 2px 60px;
+    }
 }

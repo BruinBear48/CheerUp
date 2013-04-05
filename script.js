@@ -50,6 +50,7 @@ function pickImage() {
 
 loadImgur();
 $(document).ready(function() {
+    if (lowRes) {$('.github-ribbon').text("view source");}
     $('#controls').css('visibility', 'visible');
     if (canInstall) {
         var request = window.navigator.mozApps.getSelf();
