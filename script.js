@@ -1,4 +1,3 @@
-var xhr = new XMLHttpRequest();
 var curImg = 0;
 var lastImg = 0;
 var imgC = 0;
@@ -28,6 +27,10 @@ function loadImgur() {
                     }
                     else {list.push(imgur.data[i].link);}
                 }
+            },
+            error: function() {
+                $('.github-ribbon').hide();
+                $('#main').html('<b>Could not get photos from imgur.com, please try later</b>');
             }
         });
     }
@@ -37,21 +40,30 @@ function loadImgur() {
         preImg[i] = new Image();
         preImg[i].src = list[i];
     }
+    $('#controls').css('visibility', 'visible');
+}
+
+function imgTransition() {
+    $('img').fadeOut(30);
+    $('img').attr('src', curImg);
+    $('img').fadeIn(750);
 }
 
 function pickImage() {
     var x = Math.floor(Math.random()*list.length);
     lastImg = curImg;
     curImg = list[x];
-    $('#main').hide()
-    $('#main').html('<img src=' + curImg + '/>');
-    $('#main').fadeIn('slow');
+    imgTransition();
 }
 
-loadImgur();
+
 $(document).ready(function() {
-    if (lowRes) {$('.github-ribbon').text("view source");}
-    $('#controls').css('visibility', 'visible');
+    if (navigator.onLine == false) {$('#main').html('<b>This program requires internet access</b>');}
+
+    loadImgur();
+    
+    if (lowRes) {$('.github-ribbon').text("view code...");}
+    
     if (canInstall) {
         var request = window.navigator.mozApps.getSelf();
         request.onsuccess = function getSelfSuccess() {
@@ -75,7 +87,17 @@ $(document).ready(function() {
             imgC = curImg;
             curImg = lastImg;
             lastImg = imgC;                
-            $('#main').html('<img src=' + curImg + '/>'); 
+            imgTransition();
+        }
+    });
+    
+    $('img').click(function() {
+        if (curImg != 0) {
+            var imgPage = curImg.replace(/.([^.]*)$/, '');
+            if (lowRes) {
+                imgPage = imgPage.replace(/.([^l]*)$/, '');
+            }
+            window.open(imgPage);
         }
     });
 

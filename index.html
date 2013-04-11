@@ -1,22 +1,22 @@
-<!--<!DOCTYPE html> Something wrong with my layout-->
-<html> <manifest="cheerup.appcache">
+<!--<!DOCTYPE html> CSS layout broken in standards mode fix later-->
+<html lang="en" manifest="cheerup.appcache">
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, user-scalable=no">
-        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'>
         <script type='text/javascript' src='jquery.min.js'></script>
         <script type='text/javascript' src='script.js'></script>
         <title>Cheer Up!</title>
     </head>
 
     <body>
-        <section id='main'><img src="smile.png"/></section>
-        <section id='controls'>
-            <button id="LastImg"><b><</b></button>
+        <div id='main'><img alt="A hopefully cute random image" src="smile.png"></div>
+        <div id='controls'>
+            <button id="LastImg"><b>&lt;</b></button>
             <button id="ImgurAPI"><b>Random</b></button>
             <button id="B2G"><b>Install</b></button>
-        </section>
+        </div>
         <a href="https://github.com/mandeeps/CheerUp/" class="github-ribbon">View code on Github</a>
     </body>
 
