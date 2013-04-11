@@ -27,6 +27,7 @@ function loadImgur() {
                     }
                     else {list.push(imgur.data[i].link);}
                 }
+                $('#controls').css('visibility', 'visible');
             },
             error: function() {
                 $('.github-ribbon').hide();
@@ -40,7 +41,6 @@ function loadImgur() {
         preImg[i] = new Image();
         preImg[i].src = list[i];
     }
-    $('#controls').css('visibility', 'visible');
 }
 
 function imgTransition() {
