@@ -1,5 +1,5 @@
 {
-  "version": "0.2",
+  "version": "0.3",
   "name": "Cheer Up!",
   "description": "View a random cute photo to cheer up",
   "launch_path": "/CheerUp/index.html",
@@ -11,9 +11,10 @@
     "128": "/CheerUp/cheerUp128.png",
     "64": "/CheerUp/cheerUp64.png"
   },
-   "permissions": {
-        "systemXHR": {
-            "description": "Access Imgur"
-        }
+  "appcache_path": "/cheerup.appcache",
+  "permissions": {
+    "systemXHR": {
+      "description": "Access Imgur"
+      }
     }
 }

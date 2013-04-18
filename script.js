@@ -20,6 +20,7 @@ function loadImgur() {
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Authorization", "Client-ID da42354d6ffb19a");
             },
+
             success: function(imgur) {
                 for (i = 0; i < imgur.data.length; i++) {
                     if (lowRes) {
@@ -27,11 +28,29 @@ function loadImgur() {
                     }
                     else {list.push(imgur.data[i].link);}
                 }
+
                 $('#controls').css('visibility', 'visible');
+
+                if (canInstall) {
+			        var request = window.navigator.mozApps.getSelf();
+			        request.onsuccess = function getSelfSuccess() {
+			            if (request.result) {
+			                // already installed as Firefox webapp, hide github
+			                $('.github-ribbon').css('visibility', 'hidden');
+			            }
+			            else {
+			                // not installed so show install button
+			                $('#B2G').css('visibility', 'visible');
+			            };
+			        };
+			    };
             },
-            error: function() {
-                $('.github-ribbon').hide();
-                $('#main').html('<b>Could not get photos from imgur.com, please try later</b>');
+
+            error: function(xhr, ajaxOptions, thrownError) {
+                if (thrownError) {
+					$('.github-ribbon').hide();
+					$('#main').html('<b>Could not get photos from imgur.com, please try later</b>');
+				}
             }
         });
     }
@@ -64,19 +83,7 @@ $(document).ready(function() {
     
     if (lowRes) {$('.github-ribbon').text("view code...");}
     
-    if (canInstall) {
-        var request = window.navigator.mozApps.getSelf();
-        request.onsuccess = function getSelfSuccess() {
-            if (request.result) {
-                // already installed as Firefox webapp, hide github
-                $('.github-ribbon').css('visibility', 'hidden');
-            }
-            else {
-                // not installed so show install button
-                $('#B2G').css('visibility', 'visible');
-            };
-        };
-    };
+
 
     $('#ImgurAPI').click(function() {
         pickImage();
@@ -103,9 +110,9 @@ $(document).ready(function() {
 
     $('#B2G').click(function() {
         // relative path bug - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
-        navigator.mozApps.install('http://mandeeps.github.io/CheerUp/manifest.webapp').onsuccess = function() {
+        //navigator.mozApps.install('http://mandeeps.github.io/CheerUp/manifest.webapp').onsuccess = function() {
         //navigator.mozApps.install(window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/manifest.webapp").onsuccess = function() {
-        //navigator.mozApps.install(location.protocol + "//" + location.host + "/manifest.webapp").onsuccess = function() {
+        navigator.mozApps.install(location.protocol + "//" + location.host + "/manifest.webapp").onsuccess = function() {
             $('#B2G').css('visibility', 'hidden');
         };
     });
