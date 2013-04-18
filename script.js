@@ -48,8 +48,9 @@ function loadImgur() {
 
             error: function(xhr, ajaxOptions, thrownError) {
                 if (thrownError) {
-					$('.github-ribbon').hide();
-					$('#main').html('<b>Could not get photos from imgur.com, please try later</b>');
+					alert(thrownError);
+					//$('.github-ribbon').hide();
+					//$('#main').html('<b>Could not get photos from imgur.com, please try later</b>');
 				}
             }
         });
