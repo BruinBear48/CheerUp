@@ -1,8 +1,9 @@
 {
-  "version": "0.3",
+  "version": "0.4",
   "name": "Cheer Up!",
   "description": "View a random cute photo to cheer up",
   "launch_path": "/CheerUp/index.html",
+  "appcache_path": "/CheerUp/cheerup.appcache",
   "developer": {
     "name": "Mandeep Shergill",
     "url": "http://www.shergillgames.com"
@@ -11,7 +12,6 @@
     "128": "/CheerUp/cheerUp128.png",
     "64": "/CheerUp/cheerUp64.png"
   },
-  "appcache_path": "/cheerup.appcache",
   "permissions": {
     "systemXHR": {
       "description": "Access Imgur"

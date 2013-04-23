@@ -48,7 +48,7 @@ function loadImgur() {
 
             error: function(xhr, ajaxOptions, thrownError) {
                 if (thrownError) {
-					alert(thrownError);
+					console.log(thrownError);
 					//$('.github-ribbon').hide();
 					//$('#main').html('<b>Could not get photos from imgur.com, please try later</b>');
 				}
@@ -56,7 +56,7 @@ function loadImgur() {
         });
     }
 
-    var preImg = new Array();
+    preImg = new Array();
     for (i = 0; i < list.length; i++) {
         preImg[i] = new Image();
         preImg[i].src = list[i];
@@ -72,20 +72,31 @@ function imgTransition() {
 function pickImage() {
     var x = Math.floor(Math.random()*list.length);
     lastImg = curImg;
-    curImg = list[x];
-    imgTransition();
+    if (list[x] != lastImg) {
+		curImg = list[x];
+		imgTransition();
+	}
+	else {pickImage();}
 }
 
 
 $(document).ready(function() {
     if (navigator.onLine == false) {$('#main').html('<b>This program requires internet access</b>');}
 
+// http://stackoverflow.com/a/3146971
+    Storage.prototype.setObject = function(key, value) {
+		this.setItem(key, JSON.stringify(value));
+	}
+
+	Storage.prototype.getObject = function(key) {
+		var value = this.getItem(key);
+		return value && JSON.parse(value);
+	}
+    
     loadImgur();
     
     if (lowRes) {$('.github-ribbon').text("view code...");}
     
-
-
     $('#ImgurAPI').click(function() {
         pickImage();
     });
@@ -112,8 +123,6 @@ $(document).ready(function() {
     $('#B2G').click(function() {
         // relative path bug - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
         navigator.mozApps.install('http://mandeeps.github.io/CheerUp/manifest.webapp').onsuccess = function() {
-        //navigator.mozApps.install(window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/manifest.webapp").onsuccess = function() {
-        //navigator.mozApps.install(location.protocol + "//" + location.host + "/manifest.webapp").onsuccess = function() {
             $('#B2G').css('visibility', 'hidden');
         };
     });
