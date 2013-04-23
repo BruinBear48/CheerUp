@@ -1,8 +1,11 @@
 CACHE MANIFEST
-# v6
+# v7
 CACHE:
 index.html
 stylesheet.css
 smile.png
-#script.js
-#jquery.min.js
+
+NETWORK:
+*
+script.js
+jquery.min.js
