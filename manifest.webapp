@@ -1,5 +1,5 @@
 {
-  "version": "0.4",
+  "version": "0.6",
   "name": "Cheer Up!",
   "description": "View a random cute photo to cheer up",
   "launch_path": "/CheerUp/index.html",
@@ -9,12 +9,7 @@
     "url": "http://www.shergillgames.com"
   },
   "icons": {
-    "128": "/CheerUp/cheerUp128.png",
-    "64": "/CheerUp/cheerUp64.png"
-  },
-  "permissions": {
-    "systemXHR": {
-      "description": "Access Imgur"
-      }
-    }
+    "128": "/CheerUp/img/icon128.png",
+    "64": "/CheerUp/img/icon64.png"
+  }
 }
