@@ -114,3 +114,18 @@ button:active {
 		bottom: 22px;
 	}
 }
+
+#loading {
+	width: 225px;
+	position: relative;
+	bottom: 12px;
+	display: block;
+	margin: auto;
+/*  padding: 10px 60px;
+  background-color: rgba(200,100,55,1);
+  border: 1px solid rgba(255,255,255,1);
+  box-shadow: 0px 0px 0px 4px rgba(55,55,55,1);
+  color: rgba(200,100,55,1);*/
+  font-size: 22px;
+  text-decoration: none;
+}

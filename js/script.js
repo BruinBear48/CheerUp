@@ -4,7 +4,7 @@ var imgC = 0;
 var list = [];
 var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
 var lowRes = false;
-var albumCount = 3;
+var albumCount = 2; // 112 images at 56 per album
 var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg', 'img/offline4.jpg', 'img/offline5.jpg'];
 
 var dbCache = new IDBStore({
@@ -17,10 +17,22 @@ var dbCache = new IDBStore({
 
 function preLoad() {
 	// preload images
-	var preImg = new Array();
+	var preImg = new Array(), loaded = 0;
 	for (var i = 0; i < list.length; i++) {
 		preImg[i] = new Image();
 		preImg[i].src = list[i];
+		preImg[i].onload = function() {
+			loaded++;
+			if (loaded == list.length) {
+				whenDone();
+			}
+		}
+		//if (preImg.length == list.length) {console.log('preload run');}
+	}
+	return {
+		done:function(f) {
+			whenDone = f;
+		}
 	}
 }
 
@@ -37,32 +49,45 @@ function loadImgur() {
             },
 
             success: function(imgur) {
-                for (var i = 0; i < imgur.data.length; i++) {
+                for (var y = 0; y < imgur.data.length; y++) {
                     if (lowRes) {
-                        list.push(imgur.data[i].link.replace(/.([^.]*)$/, 'l.$1'));
+                        list.push(imgur.data[y].link.replace(/.([^.]*)$/, 'l.$1'));
                     }
-                    else {list.push(imgur.data[i].link);}
+                    else {list.push(imgur.data[y].link);}
                 }
-                setControls();
-              	//preLoad().done(function(images) {
-					//for (var i = 0; i < list.length; i++) {
-						//saveImage(preImg[i], list[i]);
-					//}
-				//})
+                if (i == albumCount) {
+					console.log('# images to show: ' + list.length)
+					preLoad().done(function() {
+						$('#loading').remove();
+						setControls();
+						console.log('preload completed');
+						//for (var i = 0; i < list.length; i++) {
+							//saveImage(preImg[i], list[i]);
+						//}
+					});
+				}
             },
 
             error: function(xhr, ajaxOptions, thrownError) {
-				console.log('something wrong in imgur ajax');
-                if (thrownError) {
-					console.log(thrownError);
+				console.log('something wrong in imgur ajax' + thrownError);
+                //if (thrownError) {
+					//console.log(thrownError);
 					//$('.github-ribbon').hide();
 					//$('#main').html('<b>Could not get photos from imgur.com, please try later</b>');
-				}
+				//}
             },
             
             complete: function() {}
 		});
 	}
+}
+
+function windowSize() {
+	if (window.innerWidth <= 640 && window.innerHeight <= 640) {
+		lowRes = true;
+		$('.github-ribbon').text("view code...");
+	}
+	else {$('.github-ribbon').text("View code on Github");}
 }
 
 function imgTransition() {
@@ -131,11 +156,12 @@ $(document).ready(function() {
 		clearInterval(timer);
 		if (list.length < 10) {loadImgur();}
 	});
-
-    if (window.innerWidth <= 640 && window.innerHeight <= 640) {
-        lowRes = true;
-        $('.github-ribbon').text("view code...");
-    }
+    
+    windowSize();
+    window.onresize = function() {
+		windowSize();
+	}
+	
     
     $('#ImgurAPI').click(function() {
         pickImage();
