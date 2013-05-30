@@ -119,6 +119,7 @@ function setControls() {
 
 function offline() {
 	console.log('now offline!!!');
+	$('#notify').hide();
 	var offlineMessage = document.createElement('p');
 	var offlineText = document.createTextNode('This app needs internet access');
 	offlineMessage.appendChild(offlineText);
