@@ -7,6 +7,17 @@ html, body {
     background: linear-gradient(to bottom, orange, darkorange);
 }
 
+#notify {
+	position: absolute;
+	width: 100%;
+	font-size: 2em;
+	text-align: center;
+    background: #4479BA;
+    color: #FFF;
+    z-index: 1;
+    display: none;
+}
+
 #main {
 	position: relative;
 	height: 93%;
@@ -28,7 +39,7 @@ html, body {
 
 #controls {
     visibility: hidden;
-    width: 225px;/*14em;*/
+    width: 225px;
     position: relative;
     bottom: 12px;
     display: block;
@@ -113,19 +124,4 @@ button:active {
 	#controls {
 		bottom: 22px;
 	}
-}
-
-#loading {
-	width: 225px;
-	position: relative;
-	bottom: 12px;
-	display: block;
-	margin: auto;
-/*  padding: 10px 60px;
-  background-color: rgba(200,100,55,1);
-  border: 1px solid rgba(255,255,255,1);
-  box-shadow: 0px 0px 0px 4px rgba(55,55,55,1);
-  color: rgba(200,100,55,1);*/
-  font-size: 22px;
-  text-decoration: none;
 }
