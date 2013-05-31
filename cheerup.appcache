@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v9
+# v12
 
 CACHE:
 index.html
@@ -14,8 +14,8 @@ img/offline4.jpg
 img/offline5.jpg
 
 js/script.js
-js/jquery.min.js
-js/idbstore.min.js
+js/zepto.min.js
+# js/idbstore.min.js
 
 NETWORK:
 *
