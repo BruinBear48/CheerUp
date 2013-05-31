@@ -114,9 +114,9 @@ function windowSize() {
 }
 
 function imgTransition() {
-//ZEPTO    $('#photo').fadeOut(30);
+//    $('#photo').fadeOut(30);
     $('#photo').attr('src', curImg);
-//ZEPTO    $('#photo').fadeIn(750);
+    $('#photo').fadeIn(200);
 }
 
 function pickImage() {
