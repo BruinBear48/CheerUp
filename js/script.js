@@ -2,21 +2,21 @@ var curImg = 0;
 var lastImg = 0;
 var imgC = 0;
 var list = [];
-var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
-var lowRes = false;
-var albumCount = 3; // "albumCount * imgPerAlbum pet photos ought to be enough for anybody!"
-var imgPerAlbum = 56; // Specify images per album, in case Imgur changes this
+var lowRes = true;
+const ALBUMCOUNT = 4; // "ALBUMCOUNT * ALBUMIMAGES pet photos ought to be enough for anybody!"
+const ALBUMIMAGES = 56; // Specify images per album, in case Imgur changes this
 var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg', 'img/offline4.jpg', 'img/offline5.jpg'];
 var preloaded = false;
 var installed = false;
 
-/*var dbCache = new IDBStore({
-	storeName: 'cache',
-	dbVersion: 1,
-	keyPath: 'id',
-	autoIncrement: true,
-	onStoreReady: function(){console.log('indexedDB available');}
-});*/
+// Use localStorage to check if image already loaded in cache
+// http://stackoverflow.com/a/2462369
+// Hope user doesn't wipe cache. 
+// Should store images as blobs in indexedDB instead...
+var storage = window.localStorage;
+if (!storage.localStoreList) {
+    storage.localStoreList = "";
+}
 
 // Switch from jQuery to Zepto, need CSS3 animations...
 $.fn.slideDown = function() {
@@ -52,11 +52,14 @@ function preLoad() {
 		preImg[i] = new Image();
 		preImg[i].src = list[i];
 		preImg[i].onload = function() {
+			var i2 = preImg.indexOf(this);
+			var imageBeingLoaded = list[i2];
+			offlineList.push(imageBeingLoaded);
 			loaded++;
 			if (loaded == list.length) {
 				whenDone();
 			}
-		}
+		};
 	}
 	return {
 		done:function(f) {
@@ -67,7 +70,7 @@ function preLoad() {
 
 function loadImgur() {
 	var albumsLoaded = 0;
-	for (var i = 0; i < albumCount; i++) {
+	for (var i = 0; i < ALBUMCOUNT; i++) {
         $.ajax({
             dataType: "json",
             mimeType: "textPlain",
@@ -86,18 +89,22 @@ function loadImgur() {
                     }
                     else {list.push(imgur.data[y].link);}
                 }
-                if (albumsLoaded == albumCount) {
+                if (albumsLoaded == ALBUMCOUNT) {
 					console.log('# images to show: ' + list.length)
 					preLoad().done(function() {
 						$('#notify').slideUp();
-						console.log('preload completed');
+						//console.log('preload completed');
 						preloaded = true;
+						offlineList.splice(0, 5);
+						//console.log(offlineList);
+						storage.localStoreList = JSON.stringify(offlineList);
 					});
 				}
             },
 
             error: function(xhr, ajaxOptions, thrownError) {
 				console.log('something wrong in imgur ajax' + thrownError);
+				if (i > 2) {offline();}
             },
             
             complete: function() {}
@@ -105,24 +112,28 @@ function loadImgur() {
 	}
 }
 
-function windowSize() {
-	if (window.innerWidth <= 640 && window.innerHeight <= 640) {
-		lowRes = true;
-		$('.github-ribbon').text("view code...");
+function windowSize(firstRun) {
+	if (window.innerWidth > 1024 || window.innerHeight > 1024) {
+		if (firstRun) {lowRes = false;}
+		$('.github-ribbon').text("View code on Github");
 	}
-	else {$('.github-ribbon').text("View code on Github");}
+	else {$('.github-ribbon').text("view code...");}
+	
+	if (preloaded) {$('#notify').slideUp();}
 }
 
 function imgTransition() {
-//    $('#photo').fadeOut(30);
+    //$('#photo').fadeOut(200);
+    $('#photo').hide();
     $('#photo').attr('src', curImg);
-    $('#photo').fadeIn(200);
+    $('#photo').fadeIn(100);
 }
 
 function pickImage() {
-    if (preloaded) {var listUsed = list;}
-	else {var listUsed = offlineList;}
+    /*if (preloaded) {var listUsed = list;}
+	else {var listUsed = offlineList;}*/
 	
+	var listUsed = offlineList;	
 	var x = Math.floor(Math.random()*listUsed.length);
 	lastImg = curImg;
 	if (listUsed[x] != lastImg) {
@@ -134,6 +145,7 @@ function pickImage() {
 
 function setControls() {
 	$('#controls').css('visibility', 'visible');	
+	var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
 	if (canInstall) {
 		var request = window.navigator.mozApps.getSelf();
 		request.onsuccess = function getSelfSuccess() {
@@ -157,14 +169,20 @@ function offline() {
 	$('#notify').click(function() {
 		$(this).slideUp();
 	});
-
-	$('.github-ribbon').css('visibility', 'hidden');
+	$('.github-ribbon').hide();
+	if (storage.localStoreList.length > 100) {offlineList = JSON.parse(storage.localStoreList);}
 }
 
 $(document).ready(function() {
     setControls();
-    
+
+    windowSize(true);
+    window.onresize = function() {
+		windowSize(false);
+	}    
+
     if (navigator.onLine) {
+		console.log('first run online check...');
 		$('#notify').slideDown();
 		loadImgur();
     }
@@ -176,23 +194,23 @@ $(document).ready(function() {
 		console.log('now online');
 		if (!installed) {$('.github-ribbon').css('visibility', 'visible');}
 		if (!preloaded) {
-			$('#notify').html('Click photos to see comments.<br>Loading...');
+			$('#notify').html('Click photos for comments once loaded.<br>Loading...');
+			console.log('on event online');
 			$('#notify').slideDown();
 		}
 		else {$('#notify').slideUp();}
 		
-		if (list.length < albumCount * imgPerAlbum) {loadImgur();}
+		if (list.length < ALBUMCOUNT * ALBUMIMAGES) {loadImgur();}
 	});
-    
-    windowSize();
-    window.onresize = function() {
-		windowSize();
-	}
 
 	$('.github-ribbon').click(function() {
 		$(this).hide();
 	});
     
+	$('#notify').click(function() {
+		$(this).slideUp();
+	});
+
     $('#ImgurAPI').click(function() {
         pickImage();
     });
