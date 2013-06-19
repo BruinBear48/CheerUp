@@ -1,12 +1,12 @@
 CACHE MANIFEST
-# v14
+# v15
 
 CACHE:
 index.html
 
 css/stylesheet.css
 
-img/smile.png
+img/icon256.png
 img/offline1.jpg
 img/offline2.jpg
 img/offline3.jpg
