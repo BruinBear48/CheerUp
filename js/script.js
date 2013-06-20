@@ -3,7 +3,7 @@ var lastImg = 0;
 var imgC = 0;
 var list = [];
 var lowRes = true;
-const ALBUMCOUNT = 4; // "ALBUMCOUNT * ALBUMIMAGES pet photos ought to be enough for anybody!"
+const ALBUMCOUNT = 3; // "ALBUMCOUNT * ALBUMIMAGES pet photos ought to be enough for anybody!"
 const ALBUMIMAGES = 56; // Specify images per album, in case Imgur changes this
 var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg', 'img/offline4.jpg', 'img/offline5.jpg'];
 var preloaded = false;
@@ -47,8 +47,8 @@ $.fn.slideUp = function() {
 
 function preLoad() {
 	// preload images
-	var preImg = new Array(), loaded = 0;
-	for (var i = 0; i < list.length; i++) {
+	var preImg = new Array(), loaded = 0, count = list.length;
+	for (var i = 0; i < count; i++) {
 		preImg[i] = new Image();
 		preImg[i].src = list[i];
 		preImg[i].onload = function() {
@@ -152,11 +152,11 @@ function setControls() {
 			if (request.result) {
 				// already installed as Firefox webapp, hide github
 				installed = true;
-				$('.github-ribbon').css('visibility', 'hidden');
+				$('.github-ribbon').hide();//css('visibility', 'hidden');
 			}
 			else {
 				// not installed so show install button
-				$('#B2G').css('visibility', 'visible');
+				$('#B2G').css('display', 'inline');//css('visibility', 'visible');
 			};
 		};
 	};
@@ -170,7 +170,7 @@ function offline() {
 		$(this).slideUp();
 	});
 	$('.github-ribbon').hide();
-	if (storage.localStoreList.length > 100) {offlineList = JSON.parse(storage.localStoreList);}
+	if (storage.localStoreList.length > ALBUMIMAGES) {offlineList = JSON.parse(storage.localStoreList);}
 }
 
 $(document).ready(function() {
@@ -237,7 +237,7 @@ $(document).ready(function() {
     $('#B2G').click(function() {
         // relative path bug - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
         navigator.mozApps.install('http://mandeeps.github.io/CheerUp/manifest.webapp').onsuccess = function() {
-            $('#B2G').css('visibility', 'hidden');
+            $('#B2G').css('display', 'none');//css('visibility', 'hidden');
         };
     });
 });

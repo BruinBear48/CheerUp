@@ -39,15 +39,17 @@ html, body {
 
 #controls {
     visibility: hidden;
-    width: 225px;
+    width: 100%; /*225px;*/
     position: relative;
     bottom: 12px;
     display: block;
-    margin: auto;
+    /*margin: auto;*/
+    text-align: center;
 }
 
 #B2G {
-    visibility: hidden;
+    /*visibility: hidden;*/
+    display: none;
 }
 
 /* Shamelessly stolen from http://www.usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
