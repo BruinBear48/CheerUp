@@ -1,4 +1,6 @@
-var curImg, lastImg, imgC = 0;
+var curImg = 0;
+var lastImg = 0;
+var imgC = 0;
 var list = [];
 var lowRes = true;
 const ALBUMCOUNT = 3; // ALBUMCOUNT * ALBUMIMAGES pet photos should be enough for anybody!
@@ -65,7 +67,8 @@ function preLoad() {
 }
 
 function loadImgur() {
-	var albumsLoaded, errCount = 0;
+	var albumsLoaded = 0;
+	var errCount = 0;
 	for (var i = 0; i < ALBUMCOUNT; i++) {
         $.ajax({
             dataType: "json",
@@ -98,13 +101,13 @@ function loadImgur() {
 
             error: function(xhr, ajaxOptions, thrownError) {
 				errCount++;
-				console.log('something wrong in imgur ajax' + thrownError);
+				console.log('something wrong in imgur ajax ' + thrownError);
+				// use cached images if available
+				if (storage.localStoreList.length > ALBUMIMAGES) {
+					offlineList = JSON.parse(storage.localStoreList);
+				}
 				// If not enough albums loaded rerun ajax requests
 				if (errCount > 2) {
-					// use cached images if available
-					if (storage.localStoreList.length > ALBUMIMAGES) {
-						offlineList = JSON.parse(storage.localStoreList);
-					}
 					// rerun requests after delay
 					window.setTimeout('if (navigator.onLine) {loadImgur();}', 30000);
 				}
