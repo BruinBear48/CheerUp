@@ -151,20 +151,21 @@ function setControls() {
 	$('#controls').css('visibility', 'visible');	
 	var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
 	if (canInstall) {
+		// https://hacks.mozilla.org/2012/11/hacking-firefox-os/
 		var request = window.navigator.mozApps.getSelf();
 		var request2 = window.navigator.mozApps.getInstalled();
 		function tryWebApp() {
 			request.onsuccess = function getSelfSuccess() {
 				if (request.result) {installedAlready();}
-				else {tryTab()};
+				else {notInstalled();}//{tryTab()};
 			}
 		};
-		function tryTab() {
-			request2.onsuccess = function() {
-				if (request2.result) {installedAlready();}
-				else {notInstalled();}
-			}
-		};
+//		function tryTab() {
+//			request2.onsuccess = function() {
+//				if (request2.result) {installedAlready();}
+//				else {notInstalled();}
+//			}
+//		};
 		function installedAlready() {
 			// already installed as Firefox webapp, hide github
 			installed = true;
@@ -252,11 +253,11 @@ $(document).ready(function() {
     $('#B2G').click(function() {
         // relative path bug - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
         //navigator.mozApps.install('http://mandeeps.github.io/CheerUp/manifest.webapp').onsuccess = function() {
+        // https://hacks.mozilla.org/2012/11/hacking-firefox-os/
         var base = location.href.split('#')[0];
         base = base.replace('index.html', '');
-        install.mozillaInstallUrl = base + '/manifest.webapp';
-        install.mozillaInstall = function() {
-			var installRequest = navigator.mozApps.install(install.mozillaInstallURL).onsuccess = function() {;
+        var mozillaInstallUrl = base + '/manifest.webapp';
+		navigator.mozApps.install(mozillaInstallURL).onsuccess = function() {;
 				$('#B2G').css('display', 'none');
 			}
         };
