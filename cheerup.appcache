@@ -1,11 +1,13 @@
 CACHE MANIFEST
-# v17
+# v18
 
 CACHE:
 index.html
 
 css/stylesheet.css
 
+img/icon64.png
+img/icon128.png
 img/icon256.png
 img/offline1.jpg
 img/offline2.jpg
