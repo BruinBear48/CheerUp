@@ -7,7 +7,7 @@ const ALBUMCOUNT = 3; // ALBUMCOUNT * ALBUMIMAGES pet photos should be enough fo
 const ALBUMIMAGES = 56; // Specify images per album, in case Imgur changes this
 var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg', 'img/offline4.jpg', 'img/offline5.jpg'];
 var preloaded, installed = false;
-var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
+//var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
 
 // Use localStorage to check if images previously downloaded into cache
 // http://stackoverflow.com/a/2462369
@@ -76,7 +76,7 @@ function loadImgur() {
             mimeType: "textPlain",
             type: "GET",
             crossDomain: true,
-            url: url + i,
+            url: "https://api.imgur.com/3/gallery/r/aww/top/all/" + i,
             beforeSend: function(xhr) {
                 xhr.setRequestHeader("Authorization", "Client-ID da42354d6ffb19a");
             },
@@ -151,32 +151,19 @@ function setControls() {
 	$('#controls').css('visibility', 'visible');	
 	var canInstall = !!(navigator.mozApps && navigator.mozApps.install);
 	if (canInstall) {
-		// https://hacks.mozilla.org/2012/11/hacking-firefox-os/
 		var request = window.navigator.mozApps.getSelf();
-		var request2 = window.navigator.mozApps.getInstalled();
-		function tryWebApp() {
-			request.onsuccess = function getSelfSuccess() {
-				if (request.result) {installedAlready();}
-				else {notInstalled();}//{tryTab()};
+		request.onsuccess = function getSelfSuccess() {
+			if (request.result) {
+				// already installed as Firefox webapp, hide github
+				installed = true;
+				$('.github-ribbon').hide();				
 			}
-		};
-//		function tryTab() {
-//			request2.onsuccess = function() {
-//				if (request2.result) {installedAlready();}
-//				else {notInstalled();}
-//			}
-//		};
-		function installedAlready() {
-			// already installed as Firefox webapp, hide github
-			installed = true;
-			$('.github-ribbon').hide();
-		};	
-		function notInstalled() {
-			// not installed so show install button
-			$('#B2G').css('display', 'inline');
-		};
-		tryWebApp();
-	};
+			else {
+				// not installed so show install button
+				$('#B2G').css('display', 'inline');				
+			}
+		}
+	}
 }
 
 function offline() {
@@ -258,7 +245,7 @@ $(document).ready(function() {
         base = base.replace('index.html', '');
         var mozillaInstallUrl = base + '/manifest.webapp';
 		navigator.mozApps.install(mozillaInstallUrl).onsuccess = function() {;
-				$('#B2G').css('display', 'none');
+			$('#B2G').css('display', 'none');
         };
     });
 });
