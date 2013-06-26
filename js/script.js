@@ -257,9 +257,8 @@ $(document).ready(function() {
         var base = location.href.split('#')[0];
         base = base.replace('index.html', '');
         var mozillaInstallUrl = base + '/manifest.webapp';
-		navigator.mozApps.install(mozillaInstallURL).onsuccess = function() {;
+		navigator.mozApps.install(mozillaInstallUrl).onsuccess = function() {;
 				$('#B2G').css('display', 'none');
-			}
         };
     });
 });
