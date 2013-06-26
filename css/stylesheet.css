@@ -4,6 +4,7 @@ html, body {
 	margin: 1px 0px 1px 0px;
 	padding: 0;
     overflow: hidden;
+    background: -webkit-linear-gradient(bottom, darkorange, orange);
     background: linear-gradient(to bottom, orange, darkorange);
 }
 

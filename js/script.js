@@ -1,18 +1,14 @@
-var curImg = 0;
-var lastImg = 0;
-var imgC = 0;
+var curImg, lastImg, imgC = 0;
 var list = [];
 var lowRes = true;
-const ALBUMCOUNT = 3; // "ALBUMCOUNT * ALBUMIMAGES pet photos ought to be enough for anybody!"
+const ALBUMCOUNT = 3; // ALBUMCOUNT * ALBUMIMAGES pet photos should be enough for anybody!
 const ALBUMIMAGES = 56; // Specify images per album, in case Imgur changes this
 var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg', 'img/offline4.jpg', 'img/offline5.jpg'];
-var preloaded = false;
-var installed = false;
+var preloaded, installed = false;
 
-// Use localStorage to check if image already loaded in cache
+// Use localStorage to check if images previously downloaded into cache
 // http://stackoverflow.com/a/2462369
-// Hope user doesn't wipe cache. 
-// Should store images as blobs in indexedDB instead...
+// Better to store blobs in indexedDB instead, implement someday
 var storage = window.localStorage;
 if (!storage.localStoreList) {
     storage.localStoreList = "";
@@ -45,8 +41,8 @@ $.fn.slideUp = function() {
     }, duration);
 };
 
+// Preload images for smoother transitions, offline capability
 function preLoad() {
-	// preload images
 	var preImg = new Array(), loaded = 0, count = list.length;
 	for (var i = 0; i < count; i++) {
 		preImg[i] = new Image();
@@ -69,7 +65,7 @@ function preLoad() {
 }
 
 function loadImgur() {
-	var albumsLoaded = 0;
+	var albumsLoaded, errCount = 0;
 	for (var i = 0; i < ALBUMCOUNT; i++) {
         $.ajax({
             dataType: "json",
@@ -93,27 +89,35 @@ function loadImgur() {
 					console.log('# images to show: ' + list.length)
 					preLoad().done(function() {
 						$('#notify').slideUp();
-						//console.log('preload completed');
 						preloaded = true;
 						offlineList.splice(0, 5);
-						//console.log(offlineList);
 						storage.localStoreList = JSON.stringify(offlineList);
 					});
 				}
             },
 
             error: function(xhr, ajaxOptions, thrownError) {
+				errCount++;
 				console.log('something wrong in imgur ajax' + thrownError);
-				if (i > 2) {offline();}
+				// If not enough albums loaded rerun ajax requests
+				if (errCount > 2) {
+					// use cached images if available
+					if (storage.localStoreList.length > ALBUMIMAGES) {
+						offlineList = JSON.parse(storage.localStoreList);
+					}
+					// rerun requests after delay
+					window.setTimeout('if (navigator.onLine) {loadImgur();}', 30000);
+				}
             },
             
-            complete: function() {}
+            //complete: function() {}
 		});
 	}
 }
 
 function windowSize(firstRun) {
 	if (window.innerWidth > 1024 || window.innerHeight > 1024) {
+		// only load higher res images if browser has > 1024px available
 		if (firstRun) {lowRes = false;}
 		$('.github-ribbon').text("View code on Github");
 	}
@@ -123,16 +127,14 @@ function windowSize(firstRun) {
 }
 
 function imgTransition() {
-    //$('#photo').fadeOut(200);
+	// animate new photo display
     $('#photo').hide();
     $('#photo').attr('src', curImg);
     $('#photo').fadeIn(100);
 }
 
 function pickImage() {
-    /*if (preloaded) {var listUsed = list;}
-	else {var listUsed = offlineList;}*/
-	
+	// choice image to display, can't be same as one just shown
 	var listUsed = offlineList;	
 	var x = Math.floor(Math.random()*listUsed.length);
 	lastImg = curImg;
@@ -156,7 +158,7 @@ function setControls() {
 			}
 			else {
 				// not installed so show install button
-				$('#B2G').css('display', 'inline');//css('visibility', 'visible');
+				$('#B2G').css('display', 'inline');
 			};
 		};
 	};
@@ -166,9 +168,6 @@ function offline() {
 	console.log('now offline!!!');
 	$('#notify').html('Working offline...<br>Click to close');
 	$('#notify').slideDown();
-	$('#notify').click(function() {
-		$(this).slideUp();
-	});
 	$('.github-ribbon').hide();
 	if (storage.localStoreList.length > ALBUMIMAGES) {offlineList = JSON.parse(storage.localStoreList);}
 }
@@ -180,6 +179,14 @@ $(document).ready(function() {
     window.onresize = function() {
 		windowSize(false);
 	}    
+
+	$('.github-ribbon').click(function() {
+		$(this).hide();
+	});
+    
+	$('#notify').click(function() {
+		$(this).slideUp();
+	});
 
     if (navigator.onLine) {
 		console.log('first run online check...');
@@ -195,20 +202,14 @@ $(document).ready(function() {
 		if (!installed) {$('.github-ribbon').css('visibility', 'visible');}
 		if (!preloaded) {
 			$('#notify').html('Click photos for comments once loaded.<br>Loading...');
-			console.log('on event online');
 			$('#notify').slideDown();
 		}
 		else {$('#notify').slideUp();}
 		
-		if (list.length < ALBUMCOUNT * ALBUMIMAGES) {loadImgur();}
-	});
-
-	$('.github-ribbon').click(function() {
-		$(this).hide();
-	});
-    
-	$('#notify').click(function() {
-		$(this).slideUp();
+		if (list.length < ALBUMCOUNT * ALBUMIMAGES) {
+			console.log('online, but not all images loaded so running loadImgur');
+			loadImgur();
+		}
 	});
 
     $('#ImgurAPI').click(function() {
@@ -237,7 +238,7 @@ $(document).ready(function() {
     $('#B2G').click(function() {
         // relative path bug - https://bugzilla.mozilla.org/show_bug.cgi?id=745928
         navigator.mozApps.install('http://mandeeps.github.io/CheerUp/manifest.webapp').onsuccess = function() {
-            $('#B2G').css('display', 'none');//css('visibility', 'hidden');
+            $('#B2G').css('display', 'none');
         };
     });
 });
