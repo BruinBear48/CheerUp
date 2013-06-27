@@ -5,7 +5,8 @@ var list = [];
 var lowRes = true;
 var ALBUM_COUNT = 3; // ALBUM_COUNT * ALBUM_IMAGES pet photos should be enough for anybody!
 var ALBUM_IMAGES = 56; // Specify images per album, in case Imgur changes this
-var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg', 'img/offline4.jpg', 'img/offline5.jpg'];
+var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg',
+ 'img/offline4.jpg', 'img/offline5.jpg'];
 var preloaded, installed = false;
 //var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
 
@@ -19,29 +20,29 @@ if (!storage.localStoreList) {
 
 // Switch from jQuery to Zepto, need CSS3 animations...
 $.fn.slideDown = function() {
-    var duration = 400;
-    this.css({
-        visibility: 'hidden'
-    });
-    this.show();
+  var duration = 400;
+  this.css({
+    visibility: 'hidden'
+  });
+  this.show();
 
-    var distance = 0 - this.height();
-    this.css({
-        top: distance,
-        visibility: 'visible'
-    });
+  var distance = 0 - this.height();
+  this.css({
+    top: distance,
+    visibility: 'visible'
+  });
 
-    this.animate({
-        top: 0
-    }, duration);
+  this.animate({
+    top: 0
+  }, duration);
 };
 
 $.fn.slideUp = function() {
-    var duration = 400;
-    var distance = 0 - this.height();
-    this.animate({
-        top: distance
-    }, duration);
+  var duration = 400;
+  var distance = 0 - this.height();
+  this.animate({
+    top: distance
+  }, duration);
 };
 
 // Preload images for smoother transitions, offline capability
@@ -179,7 +180,9 @@ function offline() {
   $('#notify').html('Working offline...<br>Click to close');
   $('#notify').slideDown();
   $('.github-ribbon').hide();
-  if (storage.localStoreList.length > ALBUM_IMAGES) {offlineList = JSON.parse(storage.localStoreList);}
+  if (storage.localStoreList.length > ALBUM_IMAGES) {
+    offlineList = JSON.parse(storage.localStoreList);
+  }
 }
 
 function online() {
