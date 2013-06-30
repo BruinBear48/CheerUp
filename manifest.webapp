@@ -9,8 +9,9 @@
     "url": "http://www.shergillgames.com"
   },
   "icons": {
-    "256": "/CheerUp/img/icon256.png",
+    "60": "/CheerUp/img/icon60.png",
+    "64": "/CheerUp/img/icon64.png",
     "128": "/CheerUp/img/icon128.png",
-    "64": "/CheerUp/img/icon64.png"
+    "256": "/CheerUp/img/icon256.png"
   }
 }
