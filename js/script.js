@@ -4,7 +4,7 @@
   var imgC = 0;
   var list = [];
   var lowRes = true;
-  var ALBUM_COUNT = 3; // ALBUM_COUNT * ALBUM_IMAGES pet photos should be enough for anybody!
+  var ALBUM_COUNT = 2; // ALBUM_COUNT * ALBUM_IMAGES pet photos should be enough for anybody!
   var ALBUM_IMAGES = 56; // Specify images per album, in case Imgur changes this
   var offlineList = ['img/offline1.jpg', 'img/offline2.jpg', 'img/offline3.jpg',
    'img/offline4.jpg', 'img/offline5.jpg'];
