@@ -6,6 +6,8 @@ It can be run from its gh page: http://mandeeps.github.io/CheerUp/
 
 It should be installable in Firefox/FirefoxOS/Firefox for Android, can be added to the homescreen in iOS and Android, and saved as a hosted webapp in Chrome by dragging the crx file into the extensions page.
 
+It's up in the Firefox Marketplace, pending their final review: https://marketplace.firefox.com/app/cheer-up/
+
 When offline previously preloaded images will be displayed from the browser cache.
 
 Inspired by Pocket Kitten:
@@ -14,6 +16,9 @@ https://github.com/Rumyra/Pocket-Kitten
 
 TODO
 =======
-* use indexedDB to store images as blobs for offline use
-* add install support for Ubuntu Unity and Ubuntu Touch webapps
-* let user choose another imgur gallery
+* use indexedDB to store images as blobs for offline use on capable browsers
+* add install support for Ubuntu Unity/Ubuntu Touch webapps
+* let user choose another imgur gallery, or a set of galleries they like
+* implement touch screen swipe to view new or prior image
+* add support for phone intents to let user share photo without visiting imgur
+* improve performance of preload function
