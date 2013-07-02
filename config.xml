@@ -23,6 +23,6 @@
     <icon src="img/icon256.png" />
 
     <access origin="http://127.0.0.1*"/>
-    <access origin="https://api.imgur.com"/>
+    <access origin="*"/>
 
 </widget>
