@@ -1,11 +1,12 @@
 CACHE MANIFEST
-# v20
+# v22
 
 CACHE:
 index.html
 
 css/stylesheet.css
 
+img/icon60.png
 img/icon64.png
 img/icon128.png
 img/icon256.png

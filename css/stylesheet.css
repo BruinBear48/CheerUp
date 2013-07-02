@@ -39,17 +39,14 @@ html, body {
 }
 
 #controls {
-  visibility: hidden;
-  width: 100%; /*225px;*/
+  width: 100%;
   position: relative;
   bottom: 12px;
   display: block;
-  /*margin: auto;*/
   text-align: center;
 }
 
 #B2G {
-  /*visibility: hidden;*/
   display: none;
 }
 
