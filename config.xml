@@ -17,9 +17,12 @@
     <author href="shergillgames.com" email="mandeep@shergillgames.com">
         Mandeep Shergill
     </author>
-    <!--<feature name="http://api.phonegap.com/1.0/network"/>-->
+    <preference name="permissions" value="none"/>
     <preference name="fullscreen" value="false" />
-    <icon src="img/icon256.png" />
+    <icon src="img/icon64.png" gap:platform="android" gap:density="ldpi" />
+    <icon src="img/icon128.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="img/icon256.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="img/icon256.png" gap:platform="android" gap:density="xhdpi" />
 
     <access origin="http://127.0.0.1*"/>
     <access origin="*"/>
