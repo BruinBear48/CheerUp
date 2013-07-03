@@ -21,16 +21,12 @@
     <preference name="load-url-timeout" value="60000" />
     <preference name="permissions" value="none"/>
     <preference name="fullscreen" value="false" />
-    <gap:splash src="img/icon64.png" gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="img/icon128.png" gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="img/icon256.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="img/icon256.png" gap:platform="android" gap:density="xhdpi" />
     <icon src="img/icon64.png" gap:platform="android" gap:density="ldpi" />
     <icon src="img/icon128.png" gap:platform="android" gap:density="mdpi" />
     <icon src="img/icon256.png" gap:platform="android" gap:density="hdpi" />
     <icon src="img/icon256.png" gap:platform="android" gap:density="xhdpi" />
 
     <access origin="http://127.0.0.1*"/>
-    <access origin="*"/>
+    <access origin="*" browserOnly="true" />
 
 </widget>
