@@ -69,7 +69,7 @@
       done:function(f) {
         whenDone = f;
       }
-    }
+    };
   }
   
   function loadImgur() {
@@ -133,7 +133,7 @@
   function pickImage() {
     // choose image to display, can't be same as one just shown
     var listUsed = offlineList;
-    var size = listUsed.length
+    var size = listUsed.length;
     var x = Math.floor(Math.random()*size);
     lastImg = curImg;
     if (listUsed[x] != lastImg) {
@@ -144,7 +144,7 @@
   }
   
   function viewLastImage() {
-    if (lastImg != 0) {
+    if (lastImg !== 0) {
       imgC = curImg;
       curImg = lastImg;
       lastImg = imgC;
@@ -153,7 +153,7 @@
   }
   
   function visitImgur() {
-    if (navigator.onLine && curImg != 0 && preloaded) {
+    if (navigator.onLine && curImg !== 0 && preloaded) {
       var imgPage = curImg.replace(/.([^.]*)$/, '');
       if (lowRes) {
         imgPage = imgPage.replace(/.([^l]*)$/, '');
@@ -241,7 +241,7 @@
     windowSize(true);
     window.onresize = function() {
       windowSize(false);
-    }
+    };
   
     githubElem.click(function() {
       $(this).hide();
