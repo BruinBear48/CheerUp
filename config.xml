@@ -17,9 +17,8 @@
     <author href="shergillgames.com" email="mandeep@shergillgames.com">
         Mandeep Shergill
     </author>
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <preference name="permissions" value="none"/>
-    <!-- Define app icon for each platform. -->
+    <!--<feature name="http://api.phonegap.com/1.0/network"/>-->
+    <preference name="fullscreen" value="false" />
     <icon src="img/icon256.png" />
 
     <access origin="http://127.0.0.1*"/>

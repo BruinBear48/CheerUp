@@ -126,7 +126,7 @@
   function imgTransition() {
     // animate new photo display
     photoElem.hide();
-    photoElem.attr({'width': curImg.width, 'height': curImg.height, 'src': curImg});
+    photoElem.attr({'src': curImg, 'width': curImg.width, 'height': curImg.height});
     photoElem.fadeIn(200);
   }
   
