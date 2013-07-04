@@ -96,7 +96,7 @@
           }
           if (albumsLoaded === ALBUM_COUNT) {
             var count = list.length;
-            console.log('# images to show: ' + count);
+            //console.log('# images to show: ' + count);
             preLoad(count).done(function() {
               notifyElem.slideUp();
               preloaded = true;
@@ -108,7 +108,7 @@
   
         error: function(xhr, ajaxOptions, thrownError) {
           errCount++;
-          console.log('something wrong in imgur ajax: ' + thrownError);
+          //console.log('something wrong in imgur ajax: ' + thrownError);
           // use cached images if available
           if (storage.localStoreList.length > ALBUM_IMAGES) {
             offlineList = JSON.parse(storage.localStoreList);
@@ -181,7 +181,7 @@
   }
   
   function offline() {
-    console.log('now offline!!!');
+    //console.log('now offline!!!');
     notifyElem.html('Working offline...<br>Click to close');
     notifyElem.slideDown();
     githubElem.css('display', 'none');
@@ -191,7 +191,7 @@
   }
   
   function online() {
-    console.log('now online');
+    //console.log('now online');
     if (!installed) {githubElem.css('display', 'block');}
     if (!preloaded) {
       notifyElem.html('Click photos for comments once loaded.<br>Loading...');
@@ -200,7 +200,7 @@
     else {notifyElem.slideUp();}
   
     if (list.length < ALBUM_COUNT * ALBUM_IMAGES) {
-      console.log('online, but not all images loaded so running loadImgur');
+      //console.log('online, but not all images loaded so running loadImgur');
       loadImgur();
     }
   }
@@ -228,7 +228,7 @@
   
   $(document).ready(function() {
     if (navigator.onLine) {
-      console.log('first run online check...');
+      //console.log('first run online check...');
       notifyElem.slideDown();
       loadImgur();
     }
