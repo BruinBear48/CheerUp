@@ -7,6 +7,13 @@
   var preloaded = false, installed = false;
   //var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
 
+  var ifTouch = false;
+  var click = 'Click';
+  if (!!$.os.phone || !!$.os.tablet) {
+    var ifTouch = true;
+    var click = 'Tap';
+  }
+  
   // Don't query the DOM for these elements more than once
   var notifyElem = $('#notify');
   var photoElem = $('#photo');
@@ -182,7 +189,7 @@
   
   function offline() {
     //console.log('now offline!!!');
-    notifyElem.html('Working offline...<br>Click to close');
+    notifyElem.html('Working offline...<br>' + click + ' to close');
     notifyElem.slideDown();
     githubElem.css('display', 'none');
     if (storage.localStoreList.length > ALBUM_IMAGES) {
@@ -194,7 +201,7 @@
     //console.log('now online');
     if (!installed) {githubElem.css('display', 'block');}
     if (!preloaded) {
-      notifyElem.html('Click photos for comments once loaded.<br>Loading...');
+      notifyElem.html(click + ' photos for comments once loaded.<br>Loading...');
       notifyElem.slideDown();
     }
     else {notifyElem.slideUp();}
@@ -229,6 +236,7 @@
   $(document).ready(function() {
     if (navigator.onLine) {
       //console.log('first run online check...');
+      notifyElem.html(click + ' photos for comments once loaded.<br>Loading...');
       notifyElem.slideDown();
       loadImgur();
     }
@@ -243,15 +251,29 @@
       windowSize(false);
     };
   
-    githubElem.click(function() {
-      $(this).hide();
-    });
-    notifyElem.click(function() {
-      $(this).slideUp();
-    });
-    $('#ImgurAPI').click(pickImage);
-    $('#LastImg').click(viewLastImage);
-    photoElem.click(visitImgur);
-    installElem.click(installerFF);
+    if (ifTouch) {
+      githubElem.tap(function() {
+        $(this).hide();
+      });
+      notifyElem.tap(function() {
+        $(this).slideUp();
+      });
+      $('#ImgurAPI').tap(pickImage);
+      $('#LastImg').tap(viewLastImage);
+      photoElem.tap(visitImgur);
+      installElem.tap(installerFF);
+    }
+    else {
+      githubElem.click(function() {
+        $(this).hide();
+      });
+      notifyElem.click(function() {
+        $(this).slideUp();
+      });
+      $('#ImgurAPI').click(pickImage);
+      $('#LastImg').click(viewLastImage);
+      photoElem.click(visitImgur);
+      installElem.click(installerFF);
+    }
   });
 })();  
