@@ -106,7 +106,7 @@
             var count = list.length;
             //console.log('# images to show: ' + count);
             preLoad(count).done(function() {
-              notifyElem.slideUp();
+              //notifyElem.slideUp();
               preloaded = true;
               offlineList.splice(0, 5);
               storage.localStoreList = JSON.stringify(offlineList);
@@ -202,7 +202,7 @@
     //console.log('now online');
     if (!installed) {githubElem.css('display', 'block');}
     if (!preloaded) {
-      notifyElem.html(click + ' photos for comments once loaded.<br>Loading...');
+      notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
       notifyElem.slideDown();
     }
     else {notifyElem.slideUp();}
@@ -239,8 +239,9 @@
   $(document).ready(function() {
     if (navigator.onLine) {
       //console.log('first run online check...');
-      notifyElem.html(click + ' photos for comments once loaded.<br>Loading...');
+      notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
       notifyElem.slideDown();
+      setTimeout(function(){notifyElem.slideUp();}, 3000)
       loadImgur();
     }
     else {offline();}
