@@ -7,10 +7,11 @@
   var preloaded = false, installed = false;
   //var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
 
-  var ifTouch = false;
+// Alter text and event handlers depending on mobile or desktop
+  var select = 'click';
   var click = 'Click';
   if (!!$.os.phone || !!$.os.tablet) {
-    var ifTouch = true;
+    var select = 'tap';
     var click = 'Tap';
   }
   
@@ -223,9 +224,11 @@
   }
   
   function windowSize(firstRun) {
-    if (window.innerWidth > 1024 || window.innerHeight > 1024) {
-      // only load higher res images if browser has > 1024px available
-      if (firstRun) {lowRes = false;}
+    if ((window.innerWidth > 1000 && window.innerHeight > 1000) && firstRun) {
+      // only load higher res images if browser has lots of room to display
+      lowRes = false;
+    }
+    if (window.innerWidth > 1200 || window.innerHeight > 1200) {
       githubElem.text("View code on Github");
     }
     else {githubElem.text("view code...");}
@@ -251,29 +254,15 @@
       windowSize(false);
     };
   
-    if (ifTouch) {
-      githubElem.tap(function() {
-        $(this).hide();
-      });
-      notifyElem.tap(function() {
-        $(this).slideUp();
-      });
-      $('#ImgurAPI').tap(pickImage);
-      $('#LastImg').tap(viewLastImage);
-      photoElem.tap(visitImgur);
-      installElem.tap(installerFF);
-    }
-    else {
-      githubElem.click(function() {
-        $(this).hide();
-      });
-      notifyElem.click(function() {
-        $(this).slideUp();
-      });
-      $('#ImgurAPI').click(pickImage);
-      $('#LastImg').click(viewLastImage);
-      photoElem.click(visitImgur);
-      installElem.click(installerFF);
-    }
+    githubElem.on(select, function() {
+      $(this).hide();
+    });
+    notifyElem.on(select, function() {
+      $(this).slideUp();
+    });
+    $('#ImgurAPI').on(select, pickImage);
+    $('#LastImg').on(select, viewLastImage);
+    photoElem.on(select, visitImgur);
+    installElem.on(select, installerFF);
   });
 })();  
