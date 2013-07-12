@@ -17,10 +17,11 @@ https://github.com/Rumyra/Pocket-Kitten
 TODO
 =======
 * use indexedDB to store images as blobs for offline use on capable browsers
-* add install support for Ubuntu Unity/Ubuntu Touch webapps
-* let user choose another imgur gallery, or a set of galleries they like
 * add support for WebActivities to let user share photos or change wallpaper without visiting imgur
 * multiple text translations
 * use more than 2 image size ranges to decrease data use on very low res screens
 * change loading notifier styling
 * use WebWorkers for background image preloading
+* let user choose another imgur gallery, or a set of galleries they like
+* add install support for Ubuntu Unity/Ubuntu Touch webapps
+* pass JSLint by not making functions within loops :)

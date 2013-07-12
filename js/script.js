@@ -8,11 +8,13 @@
   //var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
 
 // Alter text and event handlers depending on mobile or desktop
-  var select = 'click';
-  var click = 'Click';
   if (!!$.os.phone || !!$.os.tablet) {
     var select = 'tap';
     var click = 'Tap';
+  }
+  else {
+    var select = 'click';
+    var click = 'Click';
   }
   
   // Don't query the DOM for these elements more than once
@@ -114,7 +116,7 @@
           }
         },
   
-        error: function(xhr, ajaxOptions, thrownError) {
+        error: function(/*xhr, ajaxOptions, thrownError*/) {
           errCount++;
           //console.log('something wrong in imgur ajax: ' + thrownError);
           // use cached images if available
@@ -124,7 +126,9 @@
           // If not enough albums loaded rerun ajax requests
           if (errCount > 2) {
             // rerun requests after delay
-            window.setTimeout('if (navigator.onLine) {loadImgur();}', 30000);
+            setTimeout(function() {
+              if (navigator.onLine) {loadImgur();}
+            }, 30000);
           }
         }
       });
@@ -144,7 +148,7 @@
     var size = listUsed.length;
     var x = Math.floor(Math.random()*size);
     lastImg = curImg;
-    if (listUsed[x] != lastImg) {
+    if (listUsed[x] !== lastImg) {
       curImg = listUsed[x];
       imgTransition();
     }
@@ -241,7 +245,7 @@
       //console.log('first run online check...');
       notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
       notifyElem.slideDown();
-      setTimeout(function(){notifyElem.slideUp();}, 3000)
+      setTimeout(function(){notifyElem.slideUp();}, 3000);
       loadImgur();
     }
     else {offline();}
