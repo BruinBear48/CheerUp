@@ -65,8 +65,8 @@
       selected.src = list[i];
       selected.onload = function() {
         var i2 = preImg.indexOf(this);
-        var imageBeingLoaded = list[i2];
-        offlineList.push(imageBeingLoaded);
+        //var imageBeingLoaded = list[i2];
+        offlineList.push(list[i2]);//imageBeingLoaded);
         loaded++;
         if (loaded === count) {
           whenDone();
@@ -161,7 +161,7 @@
   }
   
   function visitImgur() {
-    if (navigator.onLine && curImg !== 0 && preloaded) {
+    if (navigator.onLine && curImg !== 0) { //&& preloaded) {
       var imgPage = curImg.replace(/.([^.]*)$/, '');
       if (lowRes) {
         imgPage = imgPage.replace(/.([^l]*)$/, '');
