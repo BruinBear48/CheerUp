@@ -10,12 +10,10 @@ It's up in the Firefox Marketplace, pending their final review: https://marketpl
 
 When offline previously preloaded images will be displayed from the browser cache.
 
-Inspired by Pocket Kitten:
-http://12devsofxmas.co.uk/post/2012-12-27-day-2-lets-make-a-firefoxos-app
-https://github.com/Rumyra/Pocket-Kitten
+Inspired by [Pocket Kitten](https://github.com/Rumyra/Pocket-Kitten) and this [article](http://12devsofxmas.co.uk/post/2012-12-27-day-2-lets-make-a-firefoxos-app).
 
 TODO
-=======
+------
 * use indexedDB to store images as blobs for offline use on capable browsers
 * add support for WebActivities to let user share photos or change wallpaper without visiting imgur
 * multiple text translations
