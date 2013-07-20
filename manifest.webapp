@@ -9,14 +9,6 @@
     "url": "http://mandeepshergill.com"
   },
   "icons": {
-    "128": "/cheerUp128.png",
-    "64": "/cheerUp64.png"
-  },
-   "permissions": {
-        "systemXHR": {
-            "description": "Access Imgur"
-        }
-    }
     "60": "/CheerUp/img/icon60.png",
     "64": "/CheerUp/img/icon64.png",
     "128": "/CheerUp/img/icon128.png",
