@@ -1,4 +1,5 @@
 (function() {
+  "use strict";
   var curImg = 0, lastImg = 0, imgC = 0, list = [], lowRes = true;
   var ALBUM_COUNT = 2; // ALBUM_COUNT * ALBUM_IMAGES pet photos should be enough for anybody!
   var ALBUM_IMAGES = 56; // Specify images per album, in case Imgur changes this
@@ -71,15 +72,18 @@
         offlineList.push(list[i2]);//imageBeingLoaded);
         loaded++;
         if (loaded === count) {
-          whenDone();
+          //whenDone();
+          preloaded = true;
+          offlineList.splice(0, 5);
+          storage.localStoreList = JSON.stringify(offlineList);
         }
       };
     }
-    return {
-      done:function(f) {
-        whenDone = f;
-      }
-    };
+    //return {
+      //done:function(f) {
+        //whenDone = f;
+      //}
+    //};
   }
   
   function loadImgur() {
@@ -107,12 +111,12 @@
           if (albumsLoaded === ALBUM_COUNT) {
             var count = list.length;
             //console.log('# images to show: ' + count);
-            preLoad(count).done(function() {
-              //notifyElem.slideUp();
-              preloaded = true;
-              offlineList.splice(0, 5);
-              storage.localStoreList = JSON.stringify(offlineList);
-            });
+            preLoad(count);//.done(function() {
+              ////notifyElem.slideUp();
+              //preloaded = true;
+              //offlineList.splice(0, 5);
+              //storage.localStoreList = JSON.stringify(offlineList);
+            //});
           }
         },
   
