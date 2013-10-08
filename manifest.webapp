@@ -2,16 +2,16 @@
   "version": "0.8.7",
   "name": "Cheer Up!",
   "description": "View a random cute photo to cheer up",
-  "launch_path": "/CheerUp/index.html",
-  "appcache_path": "/CheerUp/cheerup.appcache",
+  "launch_path": "/index.html",
+  "appcache_path": "/cheerup.appcache",
   "developer": {
     "name": "Mandeep Shergill",
     "url": "http://mandeepshergill.com"
   },
   "icons": {
-    "60": "/CheerUp/img/icon60.png",
-    "64": "/CheerUp/img/icon64.png",
-    "128": "/CheerUp/img/icon128.png",
-    "256": "/CheerUp/img/icon256.png"
+    "60": "/img/icon60.png",
+    "64": "/img/icon64.png",
+    "128": "/img/icon128.png",
+    "256": "/img/icon256.png"
   }
 }
