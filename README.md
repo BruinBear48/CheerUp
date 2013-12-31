@@ -23,3 +23,7 @@ TODO
 * let user choose another imgur gallery, or a set of galleries they like
 * add install support for Ubuntu Unity/Ubuntu Touch webapps
 * pass JSLint by not making functions within loops :)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mandeeps/cheerup/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
