@@ -52,6 +52,7 @@ html, body {
 
 /* Shamelessly stolen from http://www.usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
 button {
+  font-weight: bold;
   padding: 10px 15px;
   background: #4479BA;
   color: #FFF;
