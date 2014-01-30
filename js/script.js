@@ -6,15 +6,19 @@
    'img/offline4.jpg', 'img/offline5.jpg'];
   var preloaded = false, installed = false;
   //var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
+  var l10n = document.webL10n.get;
+
+  // translated strings
+  var photoString = l10n('photos');
 
 // Alter text and event handlers depending on mobile or desktop
   if (!!$.os.phone || !!$.os.tablet) {
     var select = 'tap';
-    var click = 'Tap';
+    var click = l10n('tap'); //'Tap';
   }
   else {
     var select = 'click';
-    var click = 'Click';
+    var click = l10n('click'); //'Click';
   }
   
   // Don't query the DOM for these elements more than once
@@ -194,7 +198,8 @@
   
   function offline() {
     //console.log('now offline!!!');
-    notifyElem.html('Working offline...<br>' + click + ' to close');
+    //notifyElem.html('Working offline...<br>' + click + ' to close');
+    notifyElem.html(l10n('offline') + '<br>' + click + l10n('close'));
     notifyElem.slideDown();
     githubElem.css('display', 'none');
     if (storage.localStoreList.length > ALBUM_IMAGES) {
@@ -206,7 +211,8 @@
     //console.log('now online');
     if (!installed) {githubElem.css('display', 'block');}
     if (!preloaded) {
-      notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
+      //notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
+      notifyElem.html(click + '' + photoString);
       notifyElem.slideDown();
     }
     else {notifyElem.slideUp();}
@@ -233,9 +239,9 @@
       lowRes = false;
     }
     if (window.innerWidth > 1200 || window.innerHeight > 1200) {
-      githubElem.text("View code on Github");
+      githubElem.text(l10n('github'));  //"View code on Github");
     }
-    else {githubElem.text("view code...");}
+    else {githubElem.text('gh');} //"view code...");}
   
     if (preloaded) {notifyElem.slideUp();}
   }
@@ -243,7 +249,8 @@
   $(document).ready(function() {
     if (navigator.onLine) {
       //console.log('first run online check...');
-      notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
+      //notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
+      notifyElem.html(click + '' + photoString);
       notifyElem.slideDown();
       setTimeout(function(){notifyElem.slideUp();}, 3000);
       loadImgur();
