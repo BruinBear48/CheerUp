@@ -276,5 +276,6 @@
     $('#LastImg').on(select, viewLastImage);
     photoElem.on(select, visitImgur);
     installElem.on(select, installerFF);
+    if (!document.webL10n.loaded) {console.log(l10n('install'));}
   });
 })();  
