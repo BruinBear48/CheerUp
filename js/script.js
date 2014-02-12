@@ -276,6 +276,20 @@
     $('#LastImg').on(select, viewLastImage);
     photoElem.on(select, visitImgur);
     installElem.on(select, installerFF);
-    if (!document.webL10n.loaded) {console.log(l10n('install'));}
+    
+    window.addEventListener('localized', function() {
+      //if (!document.webL10n.loaded) {console.log(l10n('install'));}
+      var photoString = l10n('photos');
+      // Alter text and event handlers depending on mobile or desktop
+      if (!!$.os.phone || !!$.os.tablet) {
+        //var select = 'tap';
+        var click = l10n('tap'); //'Tap';
+      }
+      else {
+        //var select = 'click';
+        var click = l10n('click'); //'Click';
+      }
+    })
+
   });
 })();  
