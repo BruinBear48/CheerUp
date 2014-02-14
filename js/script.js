@@ -8,17 +8,17 @@
   //var url = "https://api.imgur.com/3/gallery/r/aww/top/all/"; // maybe let users select gallery at some point?
   var l10n = document.webL10n.get;
 
-  // translated strings
-  var photoString = l10n('photos');
+  // Initialize strings variables, alter values once webL10n loaded
+  var photoString = "photos for comments once loaded."; //l10n('photos');
 
 // Alter text and event handlers depending on mobile or desktop
   if (!!$.os.phone || !!$.os.tablet) {
     var select = 'tap';
-    var click = l10n('tap'); //'Tap';
+    var click = 'Tap';
   }
   else {
     var select = 'click';
-    var click = l10n('click'); //'Click';
+    var click = 'Click';
   }
   
   // Don't query the DOM for these elements more than once
@@ -247,6 +247,18 @@
   }
   
   $(document).ready(function() {
+    window.addEventListener('localized', function() {
+      // Set all string variables to localized values with webL10n
+      var photoString = l10n('photos');
+      // Alter text and event handlers depending on mobile or desktop
+      if (!!$.os.phone || !!$.os.tablet) {
+        var click = l10n('tap'); //'Tap';
+      }
+      else {
+        var click = l10n('click'); //'Click';
+      }
+    })
+
     if (navigator.onLine) {
       //console.log('first run online check...');
       //notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
@@ -269,27 +281,14 @@
     githubElem.on(select, function() {
       $(this).hide();
     });
+
     notifyElem.on(select, function() {
       $(this).slideUp();
     });
+
     $('#ImgurAPI').on(select, pickImage);
     $('#LastImg').on(select, viewLastImage);
     photoElem.on(select, visitImgur);
     installElem.on(select, installerFF);
-    
-    window.addEventListener('localized', function() {
-      //if (!document.webL10n.loaded) {console.log(l10n('install'));}
-      var photoString = l10n('photos');
-      // Alter text and event handlers depending on mobile or desktop
-      if (!!$.os.phone || !!$.os.tablet) {
-        //var select = 'tap';
-        var click = l10n('tap'); //'Tap';
-      }
-      else {
-        //var select = 'click';
-        var click = l10n('click'); //'Click';
-      }
-    })
-
   });
 })();  
