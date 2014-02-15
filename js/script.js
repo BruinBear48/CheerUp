@@ -9,7 +9,11 @@
   var l10n = document.webL10n.get;
 
   // Initialize strings variables, alter values once webL10n loaded
-  var photoString = "photos for comments once loaded."; //l10n('photos');
+  var photoString = " photos for comments once loaded.";
+  var githubString = "View code on Github";
+  var ghString = "view code...";
+  var offlineString = "Working offline...";
+  var closeString = " to close";
 
 // Alter text and event handlers depending on mobile or desktop
   if (!!$.os.phone || !!$.os.tablet) {
@@ -199,7 +203,7 @@
   function offline() {
     //console.log('now offline!!!');
     //notifyElem.html('Working offline...<br>' + click + ' to close');
-    notifyElem.html(l10n('offline') + '<br>' + click + l10n('close'));
+    notifyElem.html(offlineString + '<br>' + click + " " + closeString);
     notifyElem.slideDown();
     githubElem.css('display', 'none');
     if (storage.localStoreList.length > ALBUM_IMAGES) {
@@ -212,7 +216,7 @@
     if (!installed) {githubElem.css('display', 'block');}
     if (!preloaded) {
       //notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
-      notifyElem.html(click + '' + photoString);
+      notifyElem.html(click + " " + photoString);
       notifyElem.slideDown();
     }
     else {notifyElem.slideUp();}
@@ -239,9 +243,9 @@
       lowRes = false;
     }
     if (window.innerWidth > 1200 || window.innerHeight > 1200) {
-      githubElem.text(l10n('github'));  //"View code on Github");
+      githubElem.text(githubString);  //"View code on Github");
     }
-    else {githubElem.text('gh');} //"view code...");}
+    else {githubElem.text(ghString);} //"view code...");}
   
     if (preloaded) {notifyElem.slideUp();}
   }
@@ -249,8 +253,13 @@
   $(document).ready(function() {
     window.addEventListener('localized', function() {
       // Set all string variables to localized values with webL10n
-      var photoString = l10n('photos');
-      // Alter text and event handlers depending on mobile or desktop
+      photoString = l10n('photos');
+      ghString = l10n('gh');
+      githubString = l10n('github');
+      offlineString = l10n('offline')
+      closeString = l10n('close');
+
+
       if (!!$.os.phone || !!$.os.tablet) {
         var click = l10n('tap'); //'Tap';
       }
