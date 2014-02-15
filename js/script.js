@@ -250,34 +250,34 @@
     if (preloaded) {notifyElem.slideUp();}
   }
   
-  $(document).ready(function() {
-    window.addEventListener('localized', function() {
-      // Set all string variables to localized values with webL10n
-      photoString = l10n('photos');
-      ghString = l10n('gh');
-      githubString = l10n('github');
-      offlineString = l10n('offline')
-      closeString = l10n('close');
+  function local() {
+    // Set all string variables to localized values with webL10n
+    photoString = l10n('photos');
+    ghString = l10n('gh');
+    githubString = l10n('github');
+    offlineString = l10n('offline')
+    closeString = l10n('close');
 
-
-      if (!!$.os.phone || !!$.os.tablet) {
-        var click = l10n('tap'); //'Tap';
-      }
-      else {
-        var click = l10n('click'); //'Click';
-      }
-    })
+    if (!!$.os.phone || !!$.os.tablet) {
+      click = l10n('tap'); //'Tap';
+    }
+    else {
+      click = l10n('click'); //'Click';
+    }
 
     if (navigator.onLine) {
       //console.log('first run online check...');
       //notifyElem.html(click + ' photos for comments once loaded.'); //<br>Loading...
-      notifyElem.html(click + '' + photoString);
+      notifyElem.html(click + ' ' + photoString);
       notifyElem.slideDown();
       setTimeout(function(){notifyElem.slideUp();}, 3000);
       loadImgur();
     }
     else {offline();}
-  
+  }
+
+  $(document).ready(function() {
+    window.addEventListener('localized', local);
     window.addEventListener('offline', offline);
     window.addEventListener('online', online);
 
