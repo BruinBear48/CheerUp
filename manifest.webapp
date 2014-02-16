@@ -1,5 +1,5 @@
 {
-  "version": "0.9.0",
+  "version": "0.9.1",
   "name": "Cheer Up!",
   "description": "View a random cute photo to cheer up",
   "launch_path": "/index.html",
