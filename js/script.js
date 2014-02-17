@@ -251,6 +251,7 @@
   }
   
   function local() {
+    // https://github.com/fabi1cazenave/webL10n
     // Set all string variables to localized values with webL10n
     photoString = l10n('photos');
     ghString = l10n('gh');
